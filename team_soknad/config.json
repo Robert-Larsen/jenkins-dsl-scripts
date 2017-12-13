@@ -1,0 +1,12 @@
+{
+  "docker-soknad-builder": {
+    "gitUrl": "ssh://git@stash.devillo.no:7999/sokd/docker-soknad-builder.git"
+  },
+  "soknaddagpenger": {
+    "gitUrl": "ssh://git@stash.devillo.no:7999/sokd/soknaddagpenger.git"
+  },
+  "soknadaap": {
+    "gitUrl": "ssh://git@stash.devillo.no:7999/sokd/soknadaap.git"
+  }
+}
+

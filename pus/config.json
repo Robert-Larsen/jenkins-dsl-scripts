@@ -1,0 +1,30 @@
+{
+  "node": {
+    "gitUrl": "https://github.com/navikt/pus-node.git"
+  },
+  "maven": {
+    "gitUrl": "https://github.com/navikt/pus-maven.git"
+  },
+  "deploy": {
+    "gitUrl": "https://github.com/navikt/pus-deploy.git"
+  },
+  "notifier": {
+    "gitUrl": "https://github.com/navikt/pus-notifier.git"
+  },
+  "toolbox": {
+    "gitUrl": "https://github.com/navikt/pus-toolbox.git"
+  },
+  "policy-validator": {
+    "gitUrl": "https://github.com/navikt/pus-policy-validator.git"
+  },
+  "uu-validator": {
+    "gitUrl": "https://github.com/navikt/pus-uu-validator.git"
+  },
+  "smoketest-frontend": {
+    "gitUrl": "https://github.com/navikt/pus-smoketest-frontend.git"
+  },
+  "testbrukere": {
+    "gitUrl": "https://github.com/navikt/pus-testbrukere.git"
+  }
+}
+
