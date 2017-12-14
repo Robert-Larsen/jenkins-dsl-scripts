@@ -93,9 +93,6 @@
     "gitUrl": "https://github.com/navikt/veilarbjobbsokerkompetanse.git",
     "sone": "fss"
   },
-  "internarbeidsflatedecorator": {
-    "gitUrl": "ssh://git@stash.devillo.no:7999/syfo/internarbeidsflatedecorator.git"
-  },
   "veilarblogin": {
     "gitUrl": "ssh://git@stash.devillo.no:7999/fo/veilarblogin.git"
   },
