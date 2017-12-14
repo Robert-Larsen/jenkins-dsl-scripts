@@ -7,6 +7,9 @@
   },
   "soknadaap": {
     "gitUrl": "ssh://git@stash.devillo.no:7999/sokd/soknadaap.git"
+  },
+  "soknadinnsending": {
+    "gitUrl": "ssh://git@stash.devillo.no:7999/sokd/soknadinnsending.git"
   }
 }
 
