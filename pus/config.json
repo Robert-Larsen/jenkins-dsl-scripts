@@ -25,6 +25,9 @@
   },
   "testbrukere": {
     "gitUrl": "https://github.com/navikt/pus-testbrukere.git"
+  },
+  "unleash": {
+    "gitUrl": "https://github.com/navikt/unleash.git"
   }
 }
 
