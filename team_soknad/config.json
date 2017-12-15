@@ -10,6 +10,8 @@
   },
   "soknadinnsending": {
     "gitUrl": "ssh://git@stash.devillo.no:7999/sokd/soknadinnsending.git"
+  },
+  "soknadrefusjondagligreise": {
+    "gitUrl": "ssh://git@stash.devillo.no:7999/sokd/soknadrefusjondagligreise.git"
   }
 }
-
