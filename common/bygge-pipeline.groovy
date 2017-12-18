@@ -27,6 +27,8 @@ node("docker") {
                 " -v ~/.m2/repository:/root/.m2/repository" + // map inn maven cache
                 " -e domenebrukernavn" +
                 " -e domenepassord" +
+                " -e NEXUS_USERNAME" +
+                " -e NEXUS_PASSWORD" +
                 " -e testmiljo=${testmiljo}" +
                 " ${dockerImage}" +
                 " mvn deploy --batch-mode"
