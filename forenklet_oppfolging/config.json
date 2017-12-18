@@ -113,6 +113,15 @@
     "gitUrl": "https://github.com/navikt/fo-frontendlogger.git",
     "sone": "fss"
   },
+  "brukerdialog-behandleaktivitetsplan-v1-tjenestespesifikasjon": {
+    "gitUrl": "ssh://git@stash.devillo.no:7999/fo/brukerdialog-behandleaktivitetsplan-v1-tjenestespesifikasjon.git"
+  },
+  "brukerdialog-behandleoppfolging-v1-tjenestespesifikasjon": {
+    "gitUrl": "ssh://git@stash.devillo.no:7999/fo/brukerdialog-behandleoppfolging-v1-tjenestespesifikasjon.git"
+  },
+  "brukerdialog-dialogoppfoelging-v1-tjenestespesifikasjon": {
+    "gitUrl": "ssh://git@stash.devillo.no:7999/fo/brukerdialog-dialogoppfoelging-v1-tjenestespesifikasjon.git"
+  },
   "forenklet-deploy": {
     "gitUrl": "https://github.com/navikt/fo-forenket-deploy.git",
     "sone": "iapp"
