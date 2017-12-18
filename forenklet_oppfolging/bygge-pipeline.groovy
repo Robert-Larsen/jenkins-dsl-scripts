@@ -5,6 +5,7 @@ foMavenDockerImage = "${pusDockerImagePrefiks}maven"
 foNodeDockerImage = "${pusDockerImagePrefiks}node"
 notifierDockerImage = "${pusDockerImagePrefiks}notifier"
 policyDockerImage = "${pusDockerImagePrefiks}policy-validator"
+deployDockerImage = "${pusDockerImagePrefiks}deploy"
 foDockerImagePrefiks = "docker.adeo.no:5000/fo/"
 
 miljo = "t6"
@@ -293,12 +294,13 @@ gitCommitHash=${gitCommitHash}
                         " -Durl=http://maven.adeo.no/nexus/content/repositories/m2internal"
                 )
 
+                sh("docker pull ${deployDockerImage}")
                 sh("docker run" +
                         " --rm" +  // slett container etter kjøring
                         " --env-file ${environmentFile}" +
                         " -e plattform=nais" +
                         " -e versjon=${versjon}" +
-                        " ${pusDockerImagePrefiks}deploy"
+                        " ${deployDockerImage}"
                 )
             }
         }
@@ -309,13 +311,13 @@ gitCommitHash=${gitCommitHash}
         if (skyaDeploy) {
 
             stage("skya deploy ${miljo}") {
-
+                sh("docker pull ${deployDockerImage}")
                 sh("docker run" +
                         " --rm" +  // slett container etter kjøring
                         " --env-file ${environmentFile}" +
                         " -e plattform=skya" +
                         " -e versjon=${versjon}" +
-                        " ${pusDockerImagePrefiks}deploy"
+                        " ${deployDockerImage}"
                 )
             }
         }
