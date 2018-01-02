@@ -11,6 +11,9 @@
   "soknadinnsending": {
     "gitUrl": "ssh://git@stash.devillo.no:7999/sokd/soknadinnsending.git"
   },
+  "soknadtilleggsstonader": {
+    "gitUrl": "ssh://git@stash.devillo.no:7999/sokd/soknadtilleggsstonader.git"
+  },
   "soknadrefusjondagligreise": {
     "gitUrl": "ssh://git@stash.devillo.no:7999/sokd/soknadrefusjondagligreise.git"
   }
