@@ -10,20 +10,11 @@ node("docker") {
     stage("setup") {
 
         def environment = """
-NEXUS_USERNAME=${NEXUS_USERNAME}
-NEXUS_PASSWORD=${NEXUS_PASSWORD}
-BUILD_URL=${BUILD_URL}
-buildUrl=${BUILD_URL}
 applikasjonsNavn=${applikasjonsNavn}
 miljo=${miljo}
 testmiljo=${miljo}
 domenebrukernavn=${domenebrukernavn}
 domenepassord=${domenepassord}
-sone=${sone}
-http_proxy=${http_proxy}
-https_proxy=${https_proxy}
-no_proxy=${no_proxy}
-gitUrl=${gitUrl}
 """
         println(environment)
         writeFile([
@@ -39,7 +30,6 @@ gitUrl=${gitUrl}
             sh("docker run" +
                     " --rm" +  // slett container etter kjøring
                     " --volume=/var/run/docker.sock:/var/run/docker.sock" + // gjør det mulig å starte nye containere fra denne containeren.
-                    " -p 80:80" +
                     " --env-file ${environmentFile}" +
                     " ${smoketestFrontendImage}"
             )
