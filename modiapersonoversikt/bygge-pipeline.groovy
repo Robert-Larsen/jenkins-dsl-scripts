@@ -148,11 +148,11 @@ gitCommitHash=${gitCommitHash}
             mvnCommand("mvn clean package dependency:tree help:effective-pom --batch-mode -U")
         }
 
-        stage("mvn sonar") {
-            withSonarQubeEnv("SBL sonar") {
-                mvnCommand("mvn ${SONAR_MAVEN_GOAL} --batch-mode -Dsonar.host.url=${SONAR_HOST_URL}")
-            }
-        }
+//        stage("mvn sonar") {
+//            withSonarQubeEnv("SBL sonar") {
+//                mvnCommand("mvn ${SONAR_MAVEN_GOAL} --batch-mode -Dsonar.host.url=${SONAR_HOST_URL}")
+//            }
+//        }
 
         stage("mvn deploy") {
             mvnCommand("mvn deploy --batch-mode -DskipTests")
