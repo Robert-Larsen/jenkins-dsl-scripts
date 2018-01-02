@@ -10,15 +10,9 @@ node("docker") {
     stage("setup") {
 
         def environment = """
-applikasjonsNavn=${applikasjonsNavn}
 APPLIKASJONSNAVN=${applikasjonsNavn}
-testmiljo=${miljo}
-TESTMILJO=${miljo}
-miljo=${miljo}
 MILJO=${miljo}
-domenebrukernavn=${domenebrukernavn}
 DOMENEBRUKERNAVN=${domenebrukernavn}
-domenepassord=${domenepassord}
 DOMENEPASSORD=${domenepassord}
 """
         println(environment)
