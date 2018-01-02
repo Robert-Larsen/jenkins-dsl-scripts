@@ -14,10 +14,26 @@ def toEnvironmentString(properties) {
             .join("\n")
 }
 
+def maskPasswords(inputString) {
+    regex = /(?i)(.*passord=(.*))/
+    matchResult = inputString =~ regex
+    if(matchResult.matches()) {
+        password = m[0][2]
+        return inputString.replace(password, '*******')
+    } else {
+        return inputString
+    }
+}
+
+def safePrintln(someString) {
+    def safeToPrint = maskPasswords(someString)
+    println(safeToPrint)
+}
+
 config.forEach({ applikasjonsNavn, applikasjonsConfig ->
 
     println(applikasjonsNavn)
-    println(applikasjonsConfig)
+    safePrintln(applikasjonsConfig)
     def applikasjonsMappe = "${prosjektMappe}/${applikasjonsNavn}"
     folder(applikasjonsMappe)
 
