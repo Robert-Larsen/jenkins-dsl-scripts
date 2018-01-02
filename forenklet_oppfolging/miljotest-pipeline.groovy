@@ -11,10 +11,15 @@ node("docker") {
 
         def environment = """
 applikasjonsNavn=${applikasjonsNavn}
-miljo=${miljo}
+APPLIKASJONSNAVN=${applikasjonsNavn}
 testmiljo=${miljo}
+TESTMILJO=${miljo}
+miljo=${miljo}
+MILJO=${miljo}
 domenebrukernavn=${domenebrukernavn}
+DOMENEBRUKERNAVN=${domenebrukernavn}
 domenepassord=${domenepassord}
+DOMENEPASSORD=${domenepassord}
 """
         println(environment)
         writeFile([
