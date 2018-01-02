@@ -17,6 +17,7 @@ def toEnvironmentString(properties) {
 config.forEach({ applikasjonsNavn, applikasjonsConfig ->
 
     println(applikasjonsNavn)
+    println(applikasjonsConfig)
     def applikasjonsMappe = "${prosjektMappe}/${applikasjonsNavn}"
     folder(applikasjonsMappe)
 
@@ -24,6 +25,7 @@ config.forEach({ applikasjonsNavn, applikasjonsConfig ->
     folder(triggerMappe)
 
     def gitUrl = applikasjonsConfig.gitUrl
+    def type = applikasjonsConfig.type
     def downstreamConfig = applikasjonsConfig.downstream
     def lsRemoteProcess = "git ls-remote --heads ${gitUrl}".execute()
     def lsRemote = lsRemoteProcess.in.text
@@ -122,7 +124,8 @@ config.forEach({ applikasjonsNavn, applikasjonsConfig ->
             def pipelineScript = readFileFromWorkspace("${prosjektMappe}/miljotest-pipeline.groovy")
             def pipelineKonstanter = toEnvironmentString([
                     miljo: miljo,
-                    applikasjonsNavn: applikasjonsNavn
+                    applikasjonsNavn: applikasjonsNavn,
+                    type: type
             ])
 
             definition {
