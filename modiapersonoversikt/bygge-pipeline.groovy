@@ -1,8 +1,14 @@
 import java.text.SimpleDateFormat
 
 pusDockerImagePrefiks = "docker.adeo.no:5000/pus/"
-foMavenDockerImage = "${pusDockerImagePrefiks}maven"
+
+// https://github.com/navikt/pus-toolbox
+toolboxDockerImage = "${pusDockerImagePrefiks}toolbox"
+
+// https://github.com/navikt/pus-notifier
 notifierDockerImage = "${pusDockerImagePrefiks}notifier"
+
+// https://github.com/navikt/pus-policy-validator
 policyDockerImage = "${pusDockerImagePrefiks}policy-validator"
 
 miljo = "t6"
@@ -27,14 +33,14 @@ gitCommitHash = null
 versjon = null
 
 def mvnCommand(command) {
-    sh("docker pull ${foMavenDockerImage}")
+    sh("docker pull ${toolboxDockerImage}")
     sh("docker run" +
             " --rm" + // slett container etter kjøring
             " -v ${workspace}:/workspace" + // map inn workspace
             " -w /workspace" + // sett working directory til workspace
             " -v ~/.m2/repository:/root/.m2/repository" + // map inn maven cache
             " --env-file ${environmentFile}" +
-            " ${foMavenDockerImage}" +
+            " ${toolboxDockerImage}" +
             " ${command}"
     )
 }
@@ -70,7 +76,7 @@ node("docker") {
             sh("docker run" +
                     " --rm" + // slett container etter kjøring
                     " -v ${workspace}:/workspace" + // map inn workspace
-                    " ${foMavenDockerImage}" +
+                    " ${toolboxDockerImage}" +
                     " chmod -R 777 /workspace"
             )
             deleteDir()
