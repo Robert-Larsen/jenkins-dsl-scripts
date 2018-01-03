@@ -113,6 +113,15 @@
     "gitUrl": "https://github.com/navikt/fo-frontendlogger.git",
     "sone": "fss"
   },
+  "internarbeidsflatedecorator": {
+    "gitUrl": "ssh://git@stash.devillo.no:7999/felles/internarbeidsflatedecorator.git"
+  },
+  "modiaeventdistribution": {
+    "gitUrl": "ssh://git@stash.devillo.no:7999/felles/modiaeventdistribution.git"
+  },
+  "modiacontextholder": {
+    "gitUrl": "ssh://git@stash.devillo.no:7999/felles/modiacontextholder.git"
+  },
   "brukerdialog-behandleaktivitetsplan-v1-tjenestespesifikasjon": {
     "gitUrl": "ssh://git@stash.devillo.no:7999/fo/brukerdialog-behandleaktivitetsplan-v1-tjenestespesifikasjon.git"
   },
