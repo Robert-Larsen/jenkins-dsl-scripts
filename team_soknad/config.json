@@ -16,5 +16,11 @@
   },
   "soknadrefusjondagligreise": {
     "gitUrl": "ssh://git@stash.devillo.no:7999/sokd/soknadrefusjondagligreise.git"
+  },
+  "soknadforeldrepenger": {
+    "gitUrl": "ssh://git@stash.devillo.no:7999/sokd/soknadforeldrepenger.git"
+  },
+  "soknadtiltakspenger": {
+    "gitUrl": "ssh://git@stash.devillo.no:7999/sokd/soknadtiltakspenger.git"
   }
 }
