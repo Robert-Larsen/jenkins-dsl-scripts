@@ -90,8 +90,12 @@
     "sone": "sbs"
   },
   "veilarbjobbsokerkompetanse": {
-    "gitUrl": "https://github.com/navikt/veilarbjobbsokerkompetanse.git",
+    "gitUrl": "https://github.com/navikt/fo-veilarbjobbsokerkompetanse.git",
     "sone": "fss"
+  },
+  "veilarbjobbskproxy": {
+    "gitUrl": "https://github.com/navikt/fo-veilarbjobbskproxy.git",
+    "sone": "sbs"
   },
   "veilarblogin": {
     "gitUrl": "ssh://git@stash.devillo.no:7999/fo/veilarblogin.git"
