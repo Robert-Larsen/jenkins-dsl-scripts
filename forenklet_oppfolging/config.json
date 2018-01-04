@@ -131,6 +131,9 @@
   "brukerdialog-dialogoppfoelging-v1-tjenestespesifikasjon": {
     "gitUrl": "ssh://git@stash.devillo.no:7999/fo/brukerdialog-dialogoppfoelging-v1-tjenestespesifikasjon.git"
   },
+  "brukerdialog-jobbsokerkompetanse-v1-tjenestespesifikasjon": {
+    "gitUrl": "ssh://git@stash.devillo.no:7999/fo/brukerdialog-jobbsokerkompetanse-v1-tjenestespesifikasjon.git"
+  },
   "forenklet-deploy": {
     "gitUrl": "https://github.com/navikt/fo-forenket-deploy.git",
     "sone": "iapp"
