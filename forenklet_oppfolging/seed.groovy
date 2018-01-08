@@ -141,7 +141,9 @@ config.forEach({ applikasjonsNavn, applikasjonsConfig ->
             def pipelineKonstanter = toEnvironmentString([
                     miljo: miljo,
                     applikasjonsNavn: applikasjonsNavn,
-                    type: type
+                    type: type,
+					gitUrl: gitUrl,
+					branch: branchName
             ])
 
             definition {

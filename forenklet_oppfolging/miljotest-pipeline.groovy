@@ -1,20 +1,38 @@
 environmentFile = "__build-environment__"
-pusDockerImagePrefiks = "docker.adeo.no:5000/pus/"
+pusDockerImagePrefiks = "docker.adeo.no:5000/pus"
 smoketestFrontendImage = "${pusDockerImagePrefiks}smoketest-frontend"
+definitionFile = "uu-definisjon.js"
 
 node("docker") {
     nodeName = env.NODE_NAME
     echo "running on ${nodeName}"
+	
+	stage("cleanup") {
+		deleteDir()
+	}
+	
+	stage("checkout") {
+		sh "git clone -b ${branch} ${gitUrl} ."
+	}
 
 
     stage("setup") {
-
-        def environment = """
-APPLIKASJONSNAVN=${applikasjonsNavn}
-MILJO=${miljo}
-DOMENEBRUKERNAVN=${domenebrukernavn}
+def environment = """
+NEXUS_USERNAME=${NEXUS_USERNAME}
+NEXUS_PASSWORD=${NEXUS_PASSWORD}
+miljo=${miljo}
+testmiljo=${miljo}
+TESTMILJO=${miljo}
+domenebrukernavn=${domenebrukernavn}
+domenepassord=${domenepassord}
+DOMENEBRUKER=${domenebrukernavn}
 DOMENEPASSORD=${domenepassord}
+sone=${sone}
+http_proxy=${http_proxy}
+https_proxy=${https_proxy}
+no_proxy=${no_proxy}
 """
+		
         println(environment)
         writeFile([
                 file: environmentFile,
@@ -35,10 +53,18 @@ DOMENEPASSORD=${domenepassord}
         }
 
         stage("uu-validator") {
-
-            // TODO
-
-
+			sh("docker pull ${pusDockerImagePrefiks}/uu-validator")
+			def cmd = "docker run" +
+					" --rm" + 
+					" --privileged" + 
+					" -v /var/run/docker.sock:/var/run/docker.sock" +
+					" -v ${workspace}:/workspace" +
+					" -v /dev/shm:/dev/shm" +
+					" --env-file ${environmentFile}" +
+					" -e DEFINITION_FILE=/workspace/${definitionFile}" +
+					" ${pusDockerImagePrefiks}/uu-validator"
+			println(cmd)
+			sh(cmd)
         }
 
     }
