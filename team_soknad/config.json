@@ -22,5 +22,8 @@
   },
   "soknadtiltakspenger": {
     "gitUrl": "ssh://git@stash.devillo.no:7999/sokd/soknadtiltakspenger.git"
+  },
+  "soknadbilstonad": {
+    "gitUrl": "ssh://git@stash.devillo.no:7999/sokd/soknadbilstonad.git"
   }
 }
