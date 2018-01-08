@@ -56,10 +56,8 @@ no_proxy=${no_proxy}
 			sh("docker pull ${pusDockerImagePrefiks}/uu-validator")
 			def cmd = "docker run" +
 					" --rm" + 
-					" --privileged" + 
 					" -v /var/run/docker.sock:/var/run/docker.sock" +
 					" -v ${workspace}:/workspace" +
-					" -v /dev/shm:/dev/shm" +
 					" --env-file ${environmentFile}" +
 					" -e DEFINITION_FILE=/workspace/${definitionFile}" +
 					" ${pusDockerImagePrefiks}/uu-validator"
