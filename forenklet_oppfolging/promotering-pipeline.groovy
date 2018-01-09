@@ -8,7 +8,7 @@ node("docker") {
 
     def versjon
 
-    if ("q6".equals(${tilMiljo})) {
+    if ("q0".equals(${tilMiljo})) {
         input("Er du sikker?")
     }
 
