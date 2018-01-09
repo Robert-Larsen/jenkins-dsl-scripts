@@ -7,6 +7,11 @@ node("docker") {
     echo "running on ${nodeName}"
 
     def versjon
+
+    if ("q0".equals(${tilMiljo})) {
+        input("Er du sikker?")
+    }
+
     stage("hent versjon fra vera") {
         def url = "https://vera.adeo.no/api/v1/deploylog?onlyLatest=true&application=${applikasjonsNavn}&environment=${fraMiljo}"
         def deployLog = new groovy.json.JsonSlurper().parse(new URL(url))
