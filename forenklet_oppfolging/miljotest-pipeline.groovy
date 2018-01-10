@@ -1,6 +1,7 @@
 environmentFile = "__build-environment__"
-pusDockerImagePrefiks = "docker.adeo.no:5000/pus"
+pusDockerImagePrefiks = "docker.adeo.no:5000/pus/"
 smoketestFrontendImage = "${pusDockerImagePrefiks}smoketest-frontend"
+uuvalidatorImage = "${pusDockerImagePrefiks}uu-validator"
 definitionFile = "uu-definisjon.js"
 
 node("docker") {
@@ -14,7 +15,6 @@ node("docker") {
 	stage("checkout") {
 		sh "git clone -b ${branch} ${gitUrl} ."
 	}
-
 
     stage("setup") {
 def environment = """
@@ -53,14 +53,14 @@ no_proxy=${no_proxy}
         }
 
         stage("uu-validator") {
-			sh("docker pull ${pusDockerImagePrefiks}/uu-validator")
+			sh("docker pull ${uuvalidatorImage}")
 			def cmd = "docker run" +
 					" --rm" + 
 					" -v /var/run/docker.sock:/var/run/docker.sock" +
 					" -v ${workspace}:/workspace" +
 					" --env-file ${environmentFile}" +
 					" -e DEFINITION_FILE=/workspace/${definitionFile}" +
-					" ${pusDockerImagePrefiks}/uu-validator"
+					" ${uuvalidatorImage}"
 			println(cmd)
 			sh(cmd)
         }
