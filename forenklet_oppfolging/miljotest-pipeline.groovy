@@ -1,8 +1,8 @@
 environmentFile = "__build-environment__"
 pusDockerImagePrefiks = "docker.adeo.no:5000/pus/"
 smoketestFrontendImage = "${pusDockerImagePrefiks}smoketest-frontend"
-uuvalidatorImage = "${pusDockerImagePrefiks}uu-validator"
-definitionFile = "uu-definisjon.js"
+uuDefinitionFile = "uu-definisjon.js"
+uuValidatorImage = "${pusDockerImagePrefiks}uu-validator"
 
 node("docker") {
     nodeName = env.NODE_NAME
@@ -53,14 +53,14 @@ no_proxy=${no_proxy}
         }
 
         stage("uu-validator") {
-			sh("docker pull ${uuvalidatorImage}")
+			sh("docker pull ${uuValidatorImage}")
 			def cmd = "docker run" +
 					" --rm" + 
 					" -v /var/run/docker.sock:/var/run/docker.sock" +
 					" -v ${workspace}:/workspace" +
 					" --env-file ${environmentFile}" +
-					" -e DEFINITION_FILE=/workspace/${definitionFile}" +
-					" ${uuvalidatorImage}"
+					" -e DEFINITION_FILE=/workspace/${uuDefinitionFile}" +
+					" ${uuValidatorImage}"
 			println(cmd)
 			sh(cmd)
         }
