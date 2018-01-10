@@ -18,15 +18,18 @@ node("docker") {
 
     stage("setup") {
 def environment = """
+APPLIKASJONSNAVN=${applikasjonsNavn}
 NEXUS_USERNAME=${NEXUS_USERNAME}
 NEXUS_PASSWORD=${NEXUS_PASSWORD}
 miljo=${miljo}
+MILJO=${miljo}
 testmiljo=${miljo}
 TESTMILJO=${miljo}
 domenebrukernavn=${domenebrukernavn}
 domenepassord=${domenepassord}
 DOMENEBRUKER=${domenebrukernavn}
 DOMENEPASSORD=${domenepassord}
+DOMENEBRUKERNAVN=${domenebrukernavn}
 sone=${sone}
 http_proxy=${http_proxy}
 https_proxy=${https_proxy}
