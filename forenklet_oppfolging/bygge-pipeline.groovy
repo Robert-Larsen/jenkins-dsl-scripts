@@ -113,24 +113,28 @@ def status(statusCode) {
     }
 }
 
+def cleanup() {
+    stage("cleanup") {
+        // docker-containere kan potensielt legge igjen filer eid av root i workspace
+        // trenger å slette disse som root
+        // samtidig er det et poeng å slette node_modules slik at vi får mer konsistente bygg
+        sh("docker run" +
+                " --rm" + // slett container etter kjøring
+                " -v ${workspace}:/workspace" + // map inn workspace
+                " ${foMavenDockerImage}" +
+                " chmod -R 777 /workspace"
+        )
+        deleteDir()
+    }
+}
+
 node("docker") {
     nodeName = env.NODE_NAME
     echo "running on ${nodeName}"
 
     try {
 
-        stage("cleanup") {
-            // docker-containere kan potensielt legge igjen filer eid av root i workspace
-            // trenger å slette disse som root
-            // samtidig er det et poeng å slette node_modules slik at vi får mer konsistente bygg
-            sh("docker run" +
-                    " --rm" + // slett container etter kjøring
-                    " -v ${workspace}:/workspace" + // map inn workspace
-                    " ${foMavenDockerImage}" +
-                    " chmod -R 777 /workspace"
-            )
-            deleteDir()
-        }
+        cleanup()
 
         stage("checkout") {
             sh "git clone -b ${branch} ${gitUrl} ."
@@ -335,6 +339,8 @@ gitCommitHash=${gitCommitHash}
                     wait: false
             ])
         }
+
+        cleanup()
 
         status("ok")
     } catch (Throwable t) {
