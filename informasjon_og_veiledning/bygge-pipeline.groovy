@@ -9,7 +9,7 @@ notifierDockerImage = "${pusDockerImagePrefiks}notifier"
 policyDockerImage = "${pusDockerImagePrefiks}policy-validator"
 sblDockerImagePrefiks = "docker.adeo.no:5000/sbl/"
 
-miljo = "q9"
+miljo = "q1"
 
 appConfig = "app-config.yaml"
 dockerfile = "Dockerfile"
