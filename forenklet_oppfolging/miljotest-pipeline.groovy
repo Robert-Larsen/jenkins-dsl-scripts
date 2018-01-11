@@ -30,7 +30,6 @@ DOMENEBRUKERNAVN=${domenebrukernavn}
 domenepassord=${domenepassord}
 DOMENEBRUKER=${domenebrukernavn}
 DOMENEPASSORD=${domenepassord}
-sone=${sone}
 http_proxy=${http_proxy}
 https_proxy=${https_proxy}
 no_proxy=${no_proxy}
