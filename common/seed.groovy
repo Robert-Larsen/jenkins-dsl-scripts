@@ -59,3 +59,19 @@ tjenesterRepositories.values.forEach { repo ->
         }
     }
 }
+
+listView("${prosjektMappe}/master-jobber") {
+    jobs {
+        regex("[^-].*/master")
+    }
+    recurse(true)
+    columns {
+        status()
+        weather()
+        name()
+        lastSuccess()
+        lastFailure()
+        lastDuration()
+        buildButton()
+    }
+}

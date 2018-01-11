@@ -14,9 +14,26 @@ def toEnvironmentString(properties) {
             .join("\n")
 }
 
+def maskPasswords(inputString) {
+    regex = /(?i)(.*passord=(.*))/
+    matchResult = inputString =~ regex
+    if(matchResult.matches()) {
+        password = m[0][2]
+        return inputString.replace(password, '*******')
+    } else {
+        return inputString
+    }
+}
+
+def safePrintln(someString) {
+    def safeToPrint = maskPasswords(someString)
+    println(safeToPrint)
+}
+
 config.forEach({ applikasjonsNavn, applikasjonsConfig ->
 
     println(applikasjonsNavn)
+    safePrintln(applikasjonsConfig)
     def applikasjonsMappe = "${prosjektMappe}/${applikasjonsNavn}"
     folder(applikasjonsMappe)
 
@@ -24,6 +41,7 @@ config.forEach({ applikasjonsNavn, applikasjonsConfig ->
     folder(triggerMappe)
 
     def gitUrl = applikasjonsConfig.gitUrl
+    def type = applikasjonsConfig.type
     def downstreamConfig = applikasjonsConfig.downstream
     def lsRemoteProcess = "git ls-remote --heads ${gitUrl}".execute()
     def lsRemote = lsRemoteProcess.in.text
@@ -43,7 +61,7 @@ config.forEach({ applikasjonsNavn, applikasjonsConfig ->
             concurrentBuild(false)
 
             logRotator {
-                numToKeep(20)
+                numToKeep(5)
             }
 
             def pipelineScript = readFileFromWorkspace("${prosjektMappe}/bygge-pipeline.groovy")
@@ -90,7 +108,7 @@ config.forEach({ applikasjonsNavn, applikasjonsConfig ->
             concurrentBuild(false)
 
             logRotator {
-                numToKeep(20)
+                numToKeep(5)
             }
 
             def pipelineScript = readFileFromWorkspace("${prosjektMappe}/promotering-pipeline.groovy")
@@ -116,13 +134,15 @@ config.forEach({ applikasjonsNavn, applikasjonsConfig ->
             concurrentBuild(false)
 
             logRotator {
-                numToKeep(20)
+                numToKeep(5)
             }
 
             def pipelineScript = readFileFromWorkspace("${prosjektMappe}/miljotest-pipeline.groovy")
             def pipelineKonstanter = toEnvironmentString([
                     miljo: miljo,
-                    applikasjonsNavn: applikasjonsNavn
+                    applikasjonsNavn: applikasjonsNavn,
+                    type: type,
+					gitUrl: gitUrl
             ])
 
             definition {
@@ -139,7 +159,7 @@ config.forEach({ applikasjonsNavn, applikasjonsConfig ->
             concurrentBuild(false)
 
             logRotator {
-                numToKeep(20)
+                numToKeep(5)
             }
 
             triggers {
@@ -166,7 +186,7 @@ config.forEach({ applikasjonsNavn, applikasjonsConfig ->
         concurrentBuild(false)
 
         logRotator {
-            numToKeep(20)
+            numToKeep(5)
         }
 
         def pipelineScript = readFileFromWorkspace("${prosjektMappe}/release-pipeline.groovy")

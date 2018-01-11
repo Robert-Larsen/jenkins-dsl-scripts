@@ -57,7 +57,6 @@ node("docker") {
                     " -v ${workspace}:/workspace" + // map inn workspace
                     " -w /workspace" + // sett working directory til workspace
                     " -v ~/.m2/repository:/root/.m2/repository" + // map inn maven cache
-                    " --build-arg BASE_IMAGE_PREFIX=${baseImagePrefix}" +
                     " -e domenebrukernavn" +
                     " -e domenepassord" +
                     " ${baseImagePrefix}maven" +

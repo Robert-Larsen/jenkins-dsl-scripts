@@ -71,7 +71,7 @@
     "gitUrl": "ssh://git@stash.devillo.no:7999/fo/veilarbportefoljeindeks.git"
   },
   "veilarbportefoljeflatefs": {
-    "gitUrl": "https://github.com/navikt/fo-veilarbportefoljeflatefs.git"
+    "gitUrl": "https://github.com/navikt/fo-veilarbportefoljeflatefs.git",
     "type": "frontend"
   },
   "veientilarbeid": {
@@ -90,11 +90,12 @@
     "sone": "sbs"
   },
   "veilarbjobbsokerkompetanse": {
-    "gitUrl": "https://github.com/navikt/veilarbjobbsokerkompetanse.git",
+    "gitUrl": "https://github.com/navikt/fo-veilarbjobbsokerkompetanse.git",
     "sone": "fss"
   },
-  "internarbeidsflatedecorator": {
-    "gitUrl": "ssh://git@stash.devillo.no:7999/syfo/internarbeidsflatedecorator.git"
+  "veilarbjobbskproxy": {
+    "gitUrl": "https://github.com/navikt/fo-veilarbjobbskproxy.git",
+    "sone": "sbs"
   },
   "veilarblogin": {
     "gitUrl": "ssh://git@stash.devillo.no:7999/fo/veilarblogin.git"
@@ -115,6 +116,27 @@
   "frontendlogger": {
     "gitUrl": "https://github.com/navikt/fo-frontendlogger.git",
     "sone": "fss"
+  },
+  "internarbeidsflatedecorator": {
+    "gitUrl": "ssh://git@stash.devillo.no:7999/felles/internarbeidsflatedecorator.git"
+  },
+  "modiaeventdistribution": {
+    "gitUrl": "ssh://git@stash.devillo.no:7999/felles/modiaeventdistribution.git"
+  },
+  "modiacontextholder": {
+    "gitUrl": "ssh://git@stash.devillo.no:7999/felles/modiacontextholder.git"
+  },
+  "brukerdialog-behandleaktivitetsplan-v1-tjenestespesifikasjon": {
+    "gitUrl": "ssh://git@stash.devillo.no:7999/fo/brukerdialog-behandleaktivitetsplan-v1-tjenestespesifikasjon.git"
+  },
+  "brukerdialog-behandleoppfolging-v1-tjenestespesifikasjon": {
+    "gitUrl": "ssh://git@stash.devillo.no:7999/fo/brukerdialog-behandleoppfolging-v1-tjenestespesifikasjon.git"
+  },
+  "brukerdialog-dialogoppfoelging-v1-tjenestespesifikasjon": {
+    "gitUrl": "ssh://git@stash.devillo.no:7999/fo/brukerdialog-dialogoppfoelging-v1-tjenestespesifikasjon.git"
+  },
+  "brukerdialog-jobbsokerkompetanse-v1-tjenestespesifikasjon": {
+    "gitUrl": "ssh://git@stash.devillo.no:7999/fo/brukerdialog-jobbsokerkompetanse-v1-tjenestespesifikasjon.git"
   },
   "forenklet-deploy": {
     "gitUrl": "https://github.com/navikt/fo-forenket-deploy.git",

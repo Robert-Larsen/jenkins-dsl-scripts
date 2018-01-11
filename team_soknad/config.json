@@ -7,6 +7,23 @@
   },
   "soknadaap": {
     "gitUrl": "ssh://git@stash.devillo.no:7999/sokd/soknadaap.git"
+  },
+  "soknadinnsending": {
+    "gitUrl": "ssh://git@stash.devillo.no:7999/sokd/soknadinnsending.git"
+  },
+  "soknadtilleggsstonader": {
+    "gitUrl": "ssh://git@stash.devillo.no:7999/sokd/soknadtilleggsstonader.git"
+  },
+  "soknadrefusjondagligreise": {
+    "gitUrl": "ssh://git@stash.devillo.no:7999/sokd/soknadrefusjondagligreise.git"
+  },
+  "soknadforeldrepenger": {
+    "gitUrl": "ssh://git@stash.devillo.no:7999/sokd/soknadforeldrepenger.git"
+  },
+  "soknadtiltakspenger": {
+    "gitUrl": "ssh://git@stash.devillo.no:7999/sokd/soknadtiltakspenger.git"
+  },
+  "soknadbilstonad": {
+    "gitUrl": "ssh://git@stash.devillo.no:7999/sokd/soknadbilstonad.git"
   }
 }
-

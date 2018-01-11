@@ -5,6 +5,7 @@ foMavenDockerImage = "${pusDockerImagePrefiks}maven"
 foNodeDockerImage = "${pusDockerImagePrefiks}node"
 notifierDockerImage = "${pusDockerImagePrefiks}notifier"
 policyDockerImage = "${pusDockerImagePrefiks}policy-validator"
+deployDockerImage = "${pusDockerImagePrefiks}deploy"
 foDockerImagePrefiks = "docker.adeo.no:5000/fo/"
 
 miljo = "t6"
@@ -112,24 +113,28 @@ def status(statusCode) {
     }
 }
 
+def cleanup() {
+    stage("cleanup") {
+        // docker-containere kan potensielt legge igjen filer eid av root i workspace
+        // trenger å slette disse som root
+        // samtidig er det et poeng å slette node_modules slik at vi får mer konsistente bygg
+        sh("docker run" +
+                " --rm" + // slett container etter kjøring
+                " -v ${workspace}:/workspace" + // map inn workspace
+                " ${foMavenDockerImage}" +
+                " chmod -R 777 /workspace"
+        )
+        deleteDir()
+    }
+}
+
 node("docker") {
     nodeName = env.NODE_NAME
     echo "running on ${nodeName}"
 
     try {
 
-        stage("cleanup") {
-            // docker-containere kan potensielt legge igjen filer eid av root i workspace
-            // trenger å slette disse som root
-            // samtidig er det et poeng å slette node_modules slik at vi får mer konsistente bygg
-            sh("docker run" +
-                    " --rm" + // slett container etter kjøring
-                    " -v ${workspace}:/workspace" + // map inn workspace
-                    " ${foMavenDockerImage}" +
-                    " chmod -R 777 /workspace"
-            )
-            deleteDir()
-        }
+        cleanup()
 
         stage("checkout") {
             sh "git clone -b ${branch} ${gitUrl} ."
@@ -293,12 +298,13 @@ gitCommitHash=${gitCommitHash}
                         " -Durl=http://maven.adeo.no/nexus/content/repositories/m2internal"
                 )
 
+                sh("docker pull ${deployDockerImage}")
                 sh("docker run" +
                         " --rm" +  // slett container etter kjøring
                         " --env-file ${environmentFile}" +
                         " -e plattform=nais" +
                         " -e versjon=${versjon}" +
-                        " ${pusDockerImagePrefiks}deploy"
+                        " ${deployDockerImage}"
                 )
             }
         }
@@ -309,13 +315,13 @@ gitCommitHash=${gitCommitHash}
         if (skyaDeploy) {
 
             stage("skya deploy ${miljo}") {
-
+                sh("docker pull ${deployDockerImage}")
                 sh("docker run" +
                         " --rm" +  // slett container etter kjøring
                         " --env-file ${environmentFile}" +
                         " -e plattform=skya" +
                         " -e versjon=${versjon}" +
-                        " ${pusDockerImagePrefiks}deploy"
+                        " ${deployDockerImage}"
                 )
             }
         }
@@ -333,6 +339,8 @@ gitCommitHash=${gitCommitHash}
                     wait: false
             ])
         }
+
+        cleanup()
 
         status("ok")
     } catch (Throwable t) {
