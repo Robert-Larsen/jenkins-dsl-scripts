@@ -340,11 +340,12 @@ gitCommitHash=${gitCommitHash}
             ])
         }
 
-        cleanup()
 
         status("ok")
     } catch (Throwable t) {
         status("error")
         throw t
     }
+
+    cleanup()
 }
