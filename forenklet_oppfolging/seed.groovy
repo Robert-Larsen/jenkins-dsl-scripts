@@ -61,7 +61,7 @@ config.forEach({ applikasjonsNavn, applikasjonsConfig ->
             concurrentBuild(false)
 
             logRotator {
-                numToKeep(20)
+                numToKeep(5)
             }
 
             def pipelineScript = readFileFromWorkspace("${prosjektMappe}/bygge-pipeline.groovy")
