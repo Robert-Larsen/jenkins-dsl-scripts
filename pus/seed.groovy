@@ -2,10 +2,14 @@ def prosjektMappe = this.SCRIPT_FOLDER
 def configJson = readFileFromWorkspace("${prosjektMappe}/config.json")
 def config = new groovy.json.JsonSlurper().parseText(configJson)
 
+def triggerMappe = "${prosjektMappe}/-triggere-"
+folder(triggerMappe)
 
 config.forEach({ applikasjonsNavn, applikasjonsConfig ->
+    def pipelineNavn = "${prosjektMappe}/${applikasjonsNavn}"
+    def gitUrl = applikasjonsConfig.gitUrl
 
-    pipelineJob("${prosjektMappe}/${applikasjonsNavn}") {
+    pipelineJob(pipelineNavn) {
 
         concurrentBuild(false)
 
@@ -18,7 +22,7 @@ config.forEach({ applikasjonsNavn, applikasjonsConfig ->
         }
 
         def pipelineKonstanter = [
-                gitUrl          : applikasjonsConfig.gitUrl,
+                gitUrl          : gitUrl,
                 applikasjonsNavn: applikasjonsNavn
         ].collect({ property, verdi -> "${property}=\"${verdi}\"" }).join("\n")
 
@@ -30,6 +34,26 @@ config.forEach({ applikasjonsNavn, applikasjonsConfig ->
                 sandbox() // ellers må noen manuelt godkjenne scriptet!
             }
         }
+    }
+
+    job("${triggerMappe}/${applikasjonsNavn}") {
+
+        scm {
+            git {
+                branch("master")
+                remote {
+                    url(gitUrl)
+                }
+            }
+        }
+        triggers {
+            scm("H/2 * * * *")
+        }
+
+        publishers {
+            downstream(pipelineNavn)
+        }
+
     }
 })
 
