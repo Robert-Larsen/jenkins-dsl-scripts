@@ -108,7 +108,7 @@ config.forEach({ applikasjonsNavn, applikasjonsConfig ->
             concurrentBuild(false)
 
             logRotator {
-                numToKeep(20)
+                numToKeep(5)
             }
 
             def pipelineScript = readFileFromWorkspace("${prosjektMappe}/promotering-pipeline.groovy")
@@ -134,7 +134,7 @@ config.forEach({ applikasjonsNavn, applikasjonsConfig ->
             concurrentBuild(false)
 
             logRotator {
-                numToKeep(20)
+                numToKeep(5)
             }
 
             def pipelineScript = readFileFromWorkspace("${prosjektMappe}/miljotest-pipeline.groovy")
@@ -160,7 +160,7 @@ config.forEach({ applikasjonsNavn, applikasjonsConfig ->
             concurrentBuild(false)
 
             logRotator {
-                numToKeep(20)
+                numToKeep(5)
             }
 
             triggers {
@@ -187,7 +187,7 @@ config.forEach({ applikasjonsNavn, applikasjonsConfig ->
         concurrentBuild(false)
 
         logRotator {
-            numToKeep(20)
+            numToKeep(5)
         }
 
         def pipelineScript = readFileFromWorkspace("${prosjektMappe}/release-pipeline.groovy")
