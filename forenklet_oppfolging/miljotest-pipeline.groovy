@@ -13,7 +13,7 @@ node("docker") {
 	}
 	
 	stage("checkout") {
-		sh "git clone -b ${branch} ${gitUrl} ."
+		sh "git clone -b master ${gitUrl} ."
 	}
 
     stage("setup") {

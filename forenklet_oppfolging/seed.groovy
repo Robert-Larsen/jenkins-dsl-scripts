@@ -142,8 +142,7 @@ config.forEach({ applikasjonsNavn, applikasjonsConfig ->
                     miljo: miljo,
                     applikasjonsNavn: applikasjonsNavn,
                     type: type,
-					gitUrl: gitUrl,
-					branch: branchName
+					gitUrl: gitUrl
             ])
 
             definition {
