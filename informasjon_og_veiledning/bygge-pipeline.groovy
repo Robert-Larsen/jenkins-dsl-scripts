@@ -240,7 +240,7 @@ gitCommitHash=${gitCommitHash}
                 stage("nais deploy ${miljo}") {
 
                     sh("curl -v -X PUT --upload-file app-config.yaml https://${REPO_USERNAME}:${REPO_PASSWORD}@repo.adeo.no/repository/raw/nais/${applikasjonsNavn}/${versjon}/nais.yaml")
-                    
+
                     sh("docker run" +
                             " --rm" +  // slett container etter kjøring
                             " --env-file ${environmentFile}" +
@@ -273,5 +273,4 @@ gitCommitHash=${gitCommitHash}
         status("error")
         throw t
     }
-    cleanup()
 }
