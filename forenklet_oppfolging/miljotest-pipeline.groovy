@@ -53,7 +53,9 @@ no_proxy=${no_proxy}
                     " ${smoketestFrontendImage}"
             )
         }
+    }
 
+    if (fileExists(uuDefinitionFile)) {
         stage("uu-validator") {
 			sh("docker pull ${uuValidatorImage}")
 			def cmd = "docker run" +
