@@ -1,5 +1,5 @@
 pusDockerImagePrefiks = "docker.adeo.no:5000/pus/"
-fraMiljo = "q6"
+fraMiljo = "q0"
 tilMiljo = "p"
 environmentFile = "__build-environment__"
 plattform = sone != null ? "nais" : "skya"
