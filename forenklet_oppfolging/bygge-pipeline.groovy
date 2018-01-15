@@ -287,13 +287,12 @@ gitCommitHash=${gitCommitHash}
         if (naisDeploy) {
 
             stage("nais deploy ${miljo}") {
-
-                sh("curl -v -X PUT --upload-file app-config.yaml https://${REPO_USERNAME}:${REPO_PASSWORD}@repo.adeo.no/repository/raw/nais/${applikasjonsNavn}/${versjon}/nais.yaml")
-
                 sh("docker pull ${deployDockerImage}")
                 sh("docker run" +
                         " --rm" +  // slett container etter kjøring
                         " --env-file ${environmentFile}" +
+                        " -v ${workspace}:/workspace" + // map inn workspace
+                        " -w /workspace" + // sett working directory
                         " -e plattform=nais" +
                         " -e versjon=${versjon}" +
                         " ${deployDockerImage}"
