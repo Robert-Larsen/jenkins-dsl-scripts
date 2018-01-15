@@ -1,5 +1,3 @@
-package informasjon_og_veiledning
-
 pusDockerImagePrefiks = "docker.adeo.no:5000/pus/"
 tilMiljo = "q1"
 fraMiljo = "t1"

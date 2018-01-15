@@ -216,7 +216,7 @@ gitCommitHash=${gitCommitHash}
             sh "git push --tags"
         }
 
-        if (fileExists(dockerfile) && isMasterBranch(branch)) {
+        if (fileExists(dockerfile)) { //&& isMasterBranch(branch) - midlertidig fjernet
             def uversjonertTag = "${sblDockerImagePrefiks}${applikasjonsNavn}"
             def versjonertTag = "${uversjonertTag}:${versjon}"
 

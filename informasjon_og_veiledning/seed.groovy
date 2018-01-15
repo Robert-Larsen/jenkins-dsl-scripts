@@ -1,5 +1,3 @@
-package informasjon_og_veiledning
-
 def prosjektMappe = this.SCRIPT_FOLDER
 def configJson = readFileFromWorkspace("${prosjektMappe}/config.json")
 def config = new groovy.json.JsonSlurper().parseText(configJson)
