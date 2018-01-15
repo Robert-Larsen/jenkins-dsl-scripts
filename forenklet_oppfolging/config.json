@@ -40,16 +40,14 @@
     "gitUrl": "ssh://git@stash.devillo.no:7999/fo/veilarbdialogproxy.git"
   },
   "aktivitetsplan-felles": {
-    "gitUrl": "ssh://git@stash.devillo.no:7999/fo/aktivitetsplan-felles.git",
-    "downstream": "aktivitetsplan"
+    "gitUrl": "ssh://git@stash.devillo.no:7999/fo/aktivitetsplan-felles.git"
   },
   "aktivitetsplan-felles-tekster": {
     "gitUrl": "ssh://git@stash.devillo.no:7999/tekst/aktivitetsplan-felles-tekster.git",
     "downstream": "aktivitetsplan-tekster"
   },
   "aktivitetsplan": {
-    "gitUrl": "ssh://git@stash.devillo.no:7999/fo/aktivitetsplan.git",
-    "downstream": "veilarbaktivitetsplanfs"
+    "gitUrl": "ssh://git@stash.devillo.no:7999/fo/aktivitetsplan.git"
   },
   "aktivitetsplan-tekster": {
     "gitUrl": "ssh://git@stash.devillo.no:7999/tekst/aktivitetsplan-tekster.git",
