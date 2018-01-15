@@ -71,7 +71,7 @@
     "gitUrl": "ssh://git@stash.devillo.no:7999/fo/veilarbportefoljeindeks.git"
   },
   "veilarbportefoljeflatefs": {
-    "gitUrl": "https://github.com/navikt/fo-veilarbportefoljeflatefs.git",
+    "gitUrl": "https://github.com/navikt/veilarbportefoljeflatefs.git",
     "type": "frontend"
   },
   "veientilarbeid": {
