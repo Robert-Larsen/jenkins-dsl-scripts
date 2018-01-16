@@ -3,6 +3,10 @@
     "gitUrl": "https://github.com/navikt/fo-veilarbdemo.git",
     "sone": "fss"
   },
+  "badkitty": {
+    "gitUrl": "https://github.com/navikt/pus-badkitty.git",
+    "sone": "fss"
+  },
   "veilarbperson": {
     "gitUrl": "ssh://git@stash.devillo.no:7999/fo/veilarbperson.git"
   },
