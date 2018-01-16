@@ -30,7 +30,8 @@
     "gitUrl": "https://github.com/navikt/unleash.git"
   },
   "badkitty": {
-    "gitUrl": "https://github.com/navikt/pus-badkitty.git"
+    "gitUrl": "https://github.com/navikt/pus-badkitty.git",
+    "sone": "fss"
   }
 }
 
