@@ -24,14 +24,47 @@ def isNotMasterBranch(branch) {
     return !isMasterBranch(branch)
 }
 
-frontendDirectory = null
+def isPublicNpmPackage() {
+    if(!fileExists(getPackageJsonPath())) {
+        prinltn "isPublicNpmPackage false"
+        return false
+    }
+    def isPrivate = readJSON([
+            file: getPackageJsonPath()
+    ]).private
+    println "isPublicNpmPackage::isPrivate: $isPrivate"
+    return isPrivate != null && !isPrivate
+}
+
+def getPackageJsonPath() {
+    def frontendDirectory = getFrontendDirectory()
+    def dir = frontendDirectory + packageJson
+    println "getPackageJsonPath::dir: $dir"
+    return dir
+}
+
+def getFrontendDirectory() {
+    if (fileExists(packageJson)) {
+        return "./"
+    } else if (fileExists("web/src/frontend/${packageJson}")) {
+        return "web/src/frontend/"
+    } else if (fileExists("src/frontend/${packageJson}")) {
+        return "src/frontend/"
+    } else {
+        return null
+    }
+}
+
 gitCommitHash = null
 versjon = null
 
 def npmCommand(command) {
     sh("docker pull ${foNodeDockerImage}")
+    def frontendDirectory = getFrontendDirectory()
+    println("frontendDirectory: ${frontendDirectory}")
     sh("docker run" +
             " --rm" + // slett container etter kjøring
+            " -v ~/.npmrc:/root/.npmrc" + // map inn .npmrc
             " -v ${workspace}:/workspace" + // map inn workspace
             " -w /workspace/${frontendDirectory}" + // sett working directory til workspace + frontendDirectory
             " ${foNodeDockerImage}" +
@@ -70,24 +103,28 @@ def status(statusCode) {
     }
 }
 
+def cleanup() {
+    stage("cleanup") {
+        // docker-containere kan potensielt legge igjen filer eid av root i workspace
+        // trenger å slette disse som root
+        // samtidig er det et poeng å slette node_modules slik at vi får mer konsistente bygg
+        sh("docker run" +
+                " --rm" + // slett container etter kjøring
+                " -v ${workspace}:/workspace" + // map inn workspace
+                " ${foMavenDockerImage}" +
+                " chmod -R 777 /workspace"
+        )
+        deleteDir()
+    }
+}
+
 node("docker") {
     nodeName = env.NODE_NAME
     echo "running on ${nodeName}"
 
     try {
 
-        stage("cleanup") {
-            // docker-containere kan potensielt legge igjen filer eid av root i workspace
-            // trenger å slette disse som root
-            // samtidig er det et poeng å slette node_modules slik at vi får mer konsistente bygg
-            sh("docker run" +
-                    " --rm" + // slett container etter kjøring
-                    " -v ${workspace}:/workspace" + // map inn workspace
-                    " ${foMavenDockerImage}" +
-                    " chmod -R 777 /workspace"
-            )
-            deleteDir()
-        }
+        cleanup()
 
         stage("checkout") {
             sh "git clone -b ${branch} ${gitUrl} ."
@@ -121,6 +158,7 @@ gitCommitHash=${gitCommitHash}
             ])
             status("pending")
 
+
             if (isNotMasterBranch(branch)) {
 
                 stage("policy-sjekk") {
@@ -144,47 +182,44 @@ gitCommitHash=${gitCommitHash}
             addToDescription("Version: ${versjon}")
         }
 
-        if (fileExists(packageJson)) {
-            frontendDirectory = "."
-        } else if (fileExists("web/src/frontend/${packageJson}")) {
-            frontendDirectory = "web/src/frontend/"
-        } else if (fileExists("src/frontend/${packageJson}")) {
-            frontendDirectory = "src/frontend/"
-        }
+        if (frontendDirectoryExists()) {
+            stage("npm version") {
+                // mest for debugging
+                npmCommand("npm -v")
+                npmCommand("npm version")
 
-        if (frontendDirectory != null) {
-            dir(frontendDirectory) {
+                npmCommand("npm version --no-git-tag-version ${versjon}")
+            }
 
-                stage("npm version") {
-                    // mest for debugging
-                    npmCommand("npm -v")
+            stage("npm install") {
+                npmCommand("npm install")
+            }
 
-                    npmCommand("npm version --no-git-tag-version ${versjon}")
+            // Brukes av to grunner:
+            // 1) Logge hvilke versjoner som er brukt
+            // 2) Validerer at treet er gyldig
+            stage("npm ls") {
+                npmCommand("npm ls")
+            }
+
+            stage("npm run lint") {
+                npmCommand("npm run lint")
+            }
+
+            stage("npm run test:coverage") {
+                npmCommand("npm run test:coverage")
+            }
+
+            stage("npm run build") {
+                npmCommand("npm run build")
+            }
+
+            if (isPublicNpmPackage()) {
+                stage("npm publish") {
+                    npmCommand("npm config set email \"jenkins@nav.no\"")
+                    npmCommand("npm config set _auth \"${NPM_AUTH}\"")
+                    npmCommand("npm publish")
                 }
-
-                stage("npm install") {
-                    npmCommand("npm install")
-                }
-
-                // Brukes av to grunner:
-                // 1) Logge hvilke versjoner som er brukt
-                // 2) Validerer at treet er gyldig
-                stage("npm ls") {
-                    npmCommand("npm ls")
-                }
-
-                stage("npm run lint") {
-                    npmCommand("npm run lint")
-                }
-
-                stage("npm run test:coverage") {
-                    npmCommand("npm run test:coverage")
-                }
-
-                stage("npm run build") {
-                    npmCommand("npm run build")
-                }
-
             }
         }
 
@@ -217,8 +252,9 @@ gitCommitHash=${gitCommitHash}
             sh "git push --tags"
         }
 
-        if (fileExists(dockerfile)) { //&& isMasterBranch(branch) - midlertidig fjernet
-            def uversjonertTag = "${sblDockerImagePrefiks}${applikasjonsNavn}"
+        def dockerProsjekt = fileExists(dockerfile) && isMasterBranch(branch)
+        if (dockerProsjekt) {
+            def uversjonertTag = "${foDockerImagePrefiks}${applikasjonsNavn}"
             def versjonertTag = "${uversjonertTag}:${versjon}"
 
             stage("docker build") {
@@ -235,47 +271,66 @@ gitCommitHash=${gitCommitHash}
                 sh("docker push ${versjonertTag}")
                 sh("docker push ${uversjonertTag}")
             }
+        }
 
-            if (fileExists(appConfig)) {
-                stage("nais deploy ${miljo}") {
+        def naisDeploy = dockerProsjekt && fileExists(appConfig)
+        if (naisDeploy) {
 
-                    mvnCommand("mvn deploy:deploy-file " +
-                            " -DgroupId=nais" +
-                            " -DartifactId=${applikasjonsNavn}" +
-                            " -Dversion=${versjon}" +
-                            " -Dtype=yaml" +
-                            " -Dfile=app-config.yaml" +
-                            " -DrepositoryId=m2internal" +
-                            " -Durl=http://maven.adeo.no/nexus/content/repositories/m2internal"
-                    )
+            stage("nais deploy ${miljo}") {
 
-                    sh("docker pull ${deployDockerImage}")
-                    sh("docker run" +
-                            " --rm" +  // slett container etter kjøring
-                            " --env-file ${environmentFile}" +
-                            " -e plattform=nais" +
-                            " -e versjon=${versjon}" +
-                            " ${deployDockerImage}"
-                    )
-                }
+                mvnCommand("mvn deploy:deploy-file " +
+                        " -DgroupId=nais" +
+                        " -DartifactId=${applikasjonsNavn}" +
+                        " -Dversion=${versjon}" +
+                        " -Dtype=yaml" +
+                        " -Dfile=app-config.yaml" +
+                        " -DrepositoryId=m2internal" +
+                        " -Durl=http://maven.adeo.no/nexus/content/repositories/m2internal"
+                )
+
+                sh("docker pull ${deployDockerImage}")
+                sh("docker run" +
+                        " --rm" +  // slett container etter kjøring
+                        " --env-file ${environmentFile}" +
+                        " -e plattform=nais" +
+                        " -e versjon=${versjon}" +
+                        " ${deployDockerImage}"
+                )
             }
         }
 
         def appConfig1 = "src/main/resources/app-config.xml"
         def appConfig2 = "config/${appConfig1}"
-        if ((fileExists(appConfig1) || fileExists(appConfig2)) && isMasterBranch(branch)) {
+        def skyaDeploy = (fileExists(appConfig1) || fileExists(appConfig2)) && isMasterBranch(branch)
+        if (skyaDeploy) {
 
             stage("skya deploy ${miljo}") {
-
+                sh("docker pull ${deployDockerImage}")
                 sh("docker run" +
                         " --rm" +  // slett container etter kjøring
                         " --env-file ${environmentFile}" +
                         " -e plattform=skya" +
                         " -e versjon=${versjon}" +
-                        " ${pusDockerImagePrefiks}deploy"
+                        " ${deployDockerImage}"
                 )
             }
         }
+
+        if (skyaDeploy || naisDeploy) {
+            build([
+                    job : "./-miljotest-${miljo}-",
+                    wait: false
+            ])
+        }
+
+        if (downstream) {
+            build([
+                    job : downstream,
+                    wait: false
+            ])
+        }
+
+        cleanup()
 
         status("ok")
     } catch (Throwable t) {
