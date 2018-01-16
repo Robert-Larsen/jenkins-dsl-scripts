@@ -55,6 +55,10 @@ def getFrontendDirectory() {
     }
 }
 
+def frontendDirectoryExists() {
+    return getFrontendDirectory() != null
+}
+
 gitCommitHash = null
 versjon = null
 
