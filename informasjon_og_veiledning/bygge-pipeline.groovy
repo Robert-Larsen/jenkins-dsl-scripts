@@ -5,6 +5,7 @@ foMavenDockerImage = "${pusDockerImagePrefiks}maven"
 foNodeDockerImage = "${pusDockerImagePrefiks}node"
 notifierDockerImage = "${pusDockerImagePrefiks}notifier"
 policyDockerImage = "${pusDockerImagePrefiks}policy-validator"
+deployDockerImage = "${pusDockerImagePrefiks}deploy"
 sblDockerImagePrefiks = "docker.adeo.no:5000/sbl/"
 
 miljo = "t1"
@@ -236,17 +237,25 @@ gitCommitHash=${gitCommitHash}
             }
 
             if (fileExists(appConfig)) {
-
                 stage("nais deploy ${miljo}") {
 
-                    sh("curl -v -X PUT --upload-file app-config.yaml https://${REPO_USERNAME}:${REPO_PASSWORD}@repo.adeo.no/repository/raw/nais/${applikasjonsNavn}/${versjon}/nais.yaml")
+                    mvnCommand("mvn deploy:deploy-file " +
+                            " -DgroupId=nais" +
+                            " -DartifactId=${applikasjonsNavn}" +
+                            " -Dversion=${versjon}" +
+                            " -Dtype=yaml" +
+                            " -Dfile=app-config.yaml" +
+                            " -DrepositoryId=m2internal" +
+                            " -Durl=http://maven.adeo.no/nexus/content/repositories/m2internal"
+                    )
 
+                    sh("docker pull ${deployDockerImage}")
                     sh("docker run" +
                             " --rm" +  // slett container etter kjøring
                             " --env-file ${environmentFile}" +
                             " -e plattform=nais" +
                             " -e versjon=${versjon}" +
-                            " ${pusDockerImagePrefiks}deploy"
+                            " ${deployDockerImage}"
                     )
                 }
             }
