@@ -116,6 +116,10 @@ gitCommitHash=${gitCommitHash}
 
             if (isNotMasterBranch(branch)) {
 
+                stage("git merge master") {
+                    sh "git merge origin/master"
+                }
+
                 stage("policy-sjekk") {
                     sh("docker pull ${policyDockerImage}")
                     sh("docker run" +
@@ -125,9 +129,7 @@ gitCommitHash=${gitCommitHash}
                             " ${policyDockerImage}"
                     )
                 }
-                stage("git merge master") {
-                    sh "git merge origin/master"
-                }
+
             }
 
             sdf = new SimpleDateFormat("yyyyMMdd.Hmm")
