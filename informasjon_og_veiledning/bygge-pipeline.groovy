@@ -303,23 +303,6 @@ gitCommitHash=${gitCommitHash}
             }
         }
 
-        def appConfig1 = "src/main/resources/app-config.xml"
-        def appConfig2 = "config/${appConfig1}"
-        def skyaDeploy = (fileExists(appConfig1) || fileExists(appConfig2)) && isMasterBranch(branch)
-        if (skyaDeploy) {
-
-            stage("skya deploy ${miljo}") {
-                sh("docker pull ${deployDockerImage}")
-                sh("docker run" +
-                        " --rm" +  // slett container etter kjøring
-                        " --env-file ${environmentFile}" +
-                        " -e plattform=skya" +
-                        " -e versjon=${versjon}" +
-                        " ${deployDockerImage}"
-                )
-            }
-        }
-
         if (skyaDeploy || naisDeploy) {
             build([
                     job : "./-miljotest-${miljo}-",
