@@ -258,7 +258,7 @@ gitCommitHash=${gitCommitHash}
 
         def dockerProsjekt = fileExists(dockerfile) && isMasterBranch(branch)
         if (dockerProsjekt) {
-            def uversjonertTag = "${foDockerImagePrefiks}${applikasjonsNavn}"
+            def uversjonertTag = "${sblDockerImagePrefiks}${applikasjonsNavn}"
             def versjonertTag = "${uversjonertTag}:${versjon}"
 
             stage("docker build") {
