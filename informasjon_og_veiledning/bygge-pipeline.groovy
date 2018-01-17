@@ -162,7 +162,6 @@ gitCommitHash=${gitCommitHash}
             ])
             status("pending")
 
-
             if (isNotMasterBranch(branch)) {
 
                 stage("policy-sjekk") {
@@ -179,7 +178,7 @@ gitCommitHash=${gitCommitHash}
                 }
             }
 
-            sdf = new SimpleDateFormat("yyyyMMdd.HHmm")
+            sdf = new SimpleDateFormat("yyyyMMdd.Hmm")
             versjon = "${gitCommitNumber}.${sdf.format(new Date())}"
 
             echo "Build version: ${versjon}"
@@ -217,6 +216,7 @@ gitCommitHash=${gitCommitHash}
             stage("npm run build") {
                 npmCommand("npm run build")
             }
+
 
             if (isPublicNpmPackage()) {
                 stage("npm publish") {
@@ -256,7 +256,7 @@ gitCommitHash=${gitCommitHash}
             sh "git push --tags"
         }
 
-        def dockerProsjekt = fileExists(dockerfile) && isMasterBranch(branch)
+        def dockerProsjekt = fileExists(dockerfile)
         if (dockerProsjekt) {
             def uversjonertTag = "${sblDockerImagePrefiks}${applikasjonsNavn}"
             def versjonertTag = "${uversjonertTag}:${versjon}"
@@ -281,21 +281,12 @@ gitCommitHash=${gitCommitHash}
         if (naisDeploy) {
 
             stage("nais deploy ${miljo}") {
-
-                mvnCommand("mvn deploy:deploy-file " +
-                        " -DgroupId=nais" +
-                        " -DartifactId=${applikasjonsNavn}" +
-                        " -Dversion=${versjon}" +
-                        " -Dtype=yaml" +
-                        " -Dfile=app-config.yaml" +
-                        " -DrepositoryId=m2internal" +
-                        " -Durl=http://maven.adeo.no/nexus/content/repositories/m2internal"
-                )
-
                 sh("docker pull ${deployDockerImage}")
                 sh("docker run" +
                         " --rm" +  // slett container etter kjøring
                         " --env-file ${environmentFile}" +
+                        " -v ${workspace}:/workspace" + // map inn workspace
+                        " -w /workspace" + // sett working directory
                         " -e plattform=nais" +
                         " -e versjon=${versjon}" +
                         " ${deployDockerImage}"
@@ -320,25 +311,11 @@ gitCommitHash=${gitCommitHash}
             }
         }
 
-        if (skyaDeploy || naisDeploy) {
-            build([
-                    job : "./-miljotest-${miljo}-",
-                    wait: false
-            ])
-        }
-
-        if (downstream) {
-            build([
-                    job : downstream,
-                    wait: false
-            ])
-        }
-
-        cleanup()
-
         status("ok")
     } catch (Throwable t) {
         status("error")
         throw t
     }
+
+    cleanup()
 }
