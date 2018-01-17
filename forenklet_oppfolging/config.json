@@ -142,7 +142,7 @@
   },
   "forenklet-deploy": {
     "gitUrl": "https://github.com/navikt/fo-forenket-deploy.git",
-    "sone": "iapp"
+    "sone": "fss"
   }
 }
 
