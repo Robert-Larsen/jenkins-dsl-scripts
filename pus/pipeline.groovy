@@ -1,5 +1,6 @@
 import java.text.SimpleDateFormat
 baseImagePrefix = "docker.adeo.no:5000/pus/"
+deployDockerImage = "${baseImagePrefix}deploy"
 
 def versjon
 
@@ -59,6 +60,7 @@ node("docker") {
                     " -v ~/.m2/repository:/root/.m2/repository" + // map inn maven cache
                     " -e domenebrukernavn" +
                     " -e domenepassord" +
+                    " -e testmiljo=t6" +
                     " ${baseImagePrefix}maven" +
                     " mvn install --batch-mode"
             )
@@ -79,6 +81,27 @@ node("docker") {
     stage("docker push") {
         shell("docker push ${versjonertTag}")
         shell("docker push ${uversjonertTag}")
+    }
+
+
+    if (fileExists("app-config.yaml")) {
+
+        stage("nais deploy") {
+            sh("docker pull ${deployDockerImage}")
+            sh("docker run" +
+                    " --rm" +  // slett container etter kjøring
+                    " -v ${workspace}:/workspace" + // map inn workspace
+                    " -w /workspace" + // sett working directory
+                    " -e domenebrukernavn" +
+                    " -e domenepassord" +
+                    " -e plattform=nais" +
+                    " -e sone=fss" +
+                    " -e versjon=${versjon}" +
+                    " -e applikasjonsNavn=${applikasjonsNavn}" +
+                    " -e miljo=t" +
+                    " ${deployDockerImage}"
+            )
+        }
     }
 
 }
