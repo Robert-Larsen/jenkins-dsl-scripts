@@ -162,22 +162,6 @@ gitCommitHash=${gitCommitHash}
             ])
             status("pending")
 
-            if (isNotMasterBranch(branch)) {
-
-                stage("policy-sjekk") {
-                    sh("docker pull ${policyDockerImage}")
-                    sh("docker run" +
-                            " --rm" +  // slett container etter kjøring
-                            " -v ${workspace}:/workspace" + // map inn workspace
-                            " -w /workspace" + // sett working directory til workspace
-                            " ${policyDockerImage}"
-                    )
-                }
-                stage("git merge master") {
-                    sh "git merge origin/master"
-                }
-            }
-
             sdf = new SimpleDateFormat("yyyyMMdd.Hmm")
             versjon = "${gitCommitNumber}.${sdf.format(new Date())}"
 
