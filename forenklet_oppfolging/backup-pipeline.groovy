@@ -16,7 +16,7 @@ node{
 
         sh "git checkout origin/master"
         sh "git checkout -b master"
-        sh "git push -u backup master"
+        sh "git push -f -u backup master"
         sh "git push backup --tags"
     }
 
