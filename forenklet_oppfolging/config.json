@@ -130,7 +130,7 @@
   },
   "modiaflatefs": {
     "gitUrl": "ssh://git@stash.devillo.no:7999/dial/modiaflatefs.git"
-  }
+  },
   "brukerdialog-behandleaktivitetsplan-v1-tjenestespesifikasjon": {
     "gitUrl": "ssh://git@stash.devillo.no:7999/fo/brukerdialog-behandleaktivitetsplan-v1-tjenestespesifikasjon.git"
   },
