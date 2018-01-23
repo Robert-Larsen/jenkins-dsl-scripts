@@ -1,31 +1,45 @@
 {
   "veilarbdemo": {
     "gitUrl": "https://github.com/navikt/fo-veilarbdemo.git",
-    "sone": "fss"
+    "sone": "fss",
+    "team": "pus"
+  },
+  "badkitty": {
+    "gitUrl": "https://github.com/navikt/pus-badkitty.git",
+    "sone": "fss",
+    "team": "pus"
   },
   "veilarbperson": {
-    "gitUrl": "ssh://git@stash.devillo.no:7999/fo/veilarbperson.git"
+    "gitUrl": "ssh://git@stash.devillo.no:7999/fo/veilarbperson.git",
+    "team": "oppfølging"
   },
   "veilarbpersonfs": {
-    "gitUrl": "ssh://git@stash.devillo.no:7999/fo/veilarbpersonfs.git"
+    "gitUrl": "ssh://git@stash.devillo.no:7999/fo/veilarbpersonfs.git",
+    "team": "oppfølging"
   },
   "veilarbpersonfs-tekster": {
-    "gitUrl": "ssh://git@stash.devillo.no:7999/tekst/veilarbpersonfs-tekster.git"
+    "gitUrl": "ssh://git@stash.devillo.no:7999/tekst/veilarbpersonfs-tekster.git",
+    "team": "oppfølging"
   },
   "veilarbpersonflatefs": {
-    "gitUrl": "ssh://git@stash.devillo.no:7999/fo/veilarbpersonflatefs.git"
+    "gitUrl": "ssh://git@stash.devillo.no:7999/fo/veilarbpersonflatefs.git",
+    "team": "oppfølging"
   },
   "veilarbveileder": {
-    "gitUrl": "ssh://git@stash.devillo.no:7999/fo/veilarbveileder.git"
+    "gitUrl": "ssh://git@stash.devillo.no:7999/fo/veilarbveileder.git",
+    "team": "oppfølging"
   },
   "veilarboppfolging": {
-    "gitUrl": "ssh://git@stash.devillo.no:7999/fo/veilarboppfolging.git"
+    "gitUrl": "ssh://git@stash.devillo.no:7999/fo/veilarboppfolging.git",
+    "team": "oppfølging"
   },
   "veilarboppfolging-vilkar": {
-    "gitUrl": "ssh://git@stash.devillo.no:7999/tekst/veilarboppfolging-vilkar.git"
+    "gitUrl": "ssh://git@stash.devillo.no:7999/tekst/veilarboppfolging-vilkar.git",
+    "team": "oppfølging"
   },
   "veilarboppfolgingproxy": {
-    "gitUrl": "ssh://git@stash.devillo.no:7999/fo/veilarboppfolgingproxy.git"
+    "gitUrl": "ssh://git@stash.devillo.no:7999/fo/veilarboppfolgingproxy.git",
+    "team": "oppfølging"
   },
   "veilarbaktivitet": {
     "gitUrl": "ssh://git@stash.devillo.no:7999/fo/veilarbaktivitet.git"
@@ -40,91 +54,114 @@
     "gitUrl": "ssh://git@stash.devillo.no:7999/fo/veilarbdialogproxy.git"
   },
   "aktivitetsplan-felles": {
-    "gitUrl": "ssh://git@stash.devillo.no:7999/fo/aktivitetsplan-felles.git",
-    "downstream": "aktivitetsplan"
+    "gitUrl": "ssh://git@stash.devillo.no:7999/fo/aktivitetsplan-felles.git"
   },
   "aktivitetsplan-felles-tekster": {
     "gitUrl": "ssh://git@stash.devillo.no:7999/tekst/aktivitetsplan-felles-tekster.git",
     "downstream": "aktivitetsplan-tekster"
   },
   "aktivitetsplan": {
-    "gitUrl": "ssh://git@stash.devillo.no:7999/fo/aktivitetsplan.git",
-    "downstream": "veilarbaktivitetsplanfs"
+    "gitUrl": "ssh://git@stash.devillo.no:7999/fo/aktivitetsplan.git"
   },
   "aktivitetsplan-tekster": {
     "gitUrl": "ssh://git@stash.devillo.no:7999/tekst/aktivitetsplan-tekster.git",
     "downstream": "veilarbaktivitetsplanfs-tekster"
   },
   "veilarbaktivitetsplanfs": {
-    "gitUrl": "ssh://git@stash.devillo.no:7999/fo/veilarbaktivitetsplanfs.git"
+    "gitUrl": "ssh://git@stash.devillo.no:7999/fo/veilarbaktivitetsplanfs.git",
+    "team": "oppfølging"
   },
   "veilarbaktivitetsplanfs-tekster": {
-    "gitUrl": "ssh://git@stash.devillo.no:7999/tekst/veilarbaktivitetsplanfs-tekster.git"
+    "gitUrl": "ssh://git@stash.devillo.no:7999/tekst/veilarbaktivitetsplanfs-tekster.git",
+    "team": "oppfølging"
   },
   "veilarboppgave": {
-    "gitUrl": "ssh://git@stash.devillo.no:7999/fo/veilarboppgave.git"
+    "gitUrl": "ssh://git@stash.devillo.no:7999/fo/veilarboppgave.git",
+    "team": "oppfølging"
   },
   "veilarbportefolje": {
-    "gitUrl": "ssh://git@stash.devillo.no:7999/fo/veilarbportefolje.git"
+    "gitUrl": "ssh://git@stash.devillo.no:7999/fo/veilarbportefolje.git",
+    "team": "oppfølging"
   },
   "veilarbportefoljeindeks": {
-    "gitUrl": "ssh://git@stash.devillo.no:7999/fo/veilarbportefoljeindeks.git"
+    "gitUrl": "ssh://git@stash.devillo.no:7999/fo/veilarbportefoljeindeks.git",
+    "team": "oppfølging"
   },
   "veilarbportefoljeflatefs": {
-    "gitUrl": "https://github.com/navikt/fo-veilarbportefoljeflatefs.git",
-    "type": "frontend"
+    "gitUrl": "https://github.com/navikt/veilarbportefoljeflatefs.git",
+    "type": "frontend",
+    "team": "oppfølging"
   },
   "veientilarbeid": {
     "gitUrl": "https://github.com/navikt/veientilarbeid.git",
-    "sone": "sbs"
+    "sone": "sbs",
+    "team": "sib"
   },
   "veilarbportefoljeflatefs-tekster": {
-    "gitUrl": "ssh://git@stash.devillo.no:7999/tekst/veilarbportefoljeflatefs-tekster.git"
+    "gitUrl": "ssh://git@stash.devillo.no:7999/tekst/veilarbportefoljeflatefs-tekster.git",
+    "team": "oppfølging"
   },
   "jobbsokerkompetanse": {
     "gitUrl": "https://github.com/navikt/jobbsokerkompetanse.git",
-    "sone": "sbs"
+    "sone": "sbs",
+    "team": "sib"
   },
   "arbeidssokerregistrering": {
     "gitUrl": "https://github.com/navikt/arbeidssokerregistrering.git",
-    "sone": "sbs"
+    "sone": "sbs",
+    "team": "sib"
   },
   "veilarbjobbsokerkompetanse": {
     "gitUrl": "https://github.com/navikt/fo-veilarbjobbsokerkompetanse.git",
-    "sone": "fss"
+    "sone": "fss",
+    "team": "sib"
   },
   "veilarbjobbskproxy": {
     "gitUrl": "https://github.com/navikt/fo-veilarbjobbskproxy.git",
-    "sone": "sbs"
+    "sone": "sbs",
+    "team": "sib"
   },
   "veilarblogin": {
-    "gitUrl": "ssh://git@stash.devillo.no:7999/fo/veilarblogin.git"
+    "gitUrl": "ssh://git@stash.devillo.no:7999/fo/veilarblogin.git",
+    "team": "oppfølging"
   },
   "miasolr": {
-    "gitUrl": "ssh://git@stash.devillo.no:7999/fo/miasolr.git"
+    "gitUrl": "ssh://git@stash.devillo.no:7999/fo/miasolr.git",
+    "team": "oppfølging"
   },
   "miatekster": {
-    "gitUrl": "ssh://git@stash.devillo.no:7999/tekst/mia-tekster.git"
+    "gitUrl": "ssh://git@stash.devillo.no:7999/tekst/mia-tekster.git",
+    "team": "oppfølging"
   },
   "mia": {
-    "gitUrl": "ssh://git@stash.devillo.no:7999/fo/mia.git"
+    "gitUrl": "ssh://git@stash.devillo.no:7999/fo/mia.git",
+    "team": "oppfølging"
   },
   "feature": {
     "gitUrl": "https://github.com/navikt/fo-feature.git",
-    "sone": "fss"
+    "sone": "fss",
+    "team": "oppfølging"
   },
   "frontendlogger": {
     "gitUrl": "https://github.com/navikt/fo-frontendlogger.git",
-    "sone": "fss"
+    "sone": "fss",
+    "team": "oppfølging"
   },
   "internarbeidsflatedecorator": {
-    "gitUrl": "ssh://git@stash.devillo.no:7999/felles/internarbeidsflatedecorator.git"
+    "gitUrl": "ssh://git@stash.devillo.no:7999/felles/internarbeidsflatedecorator.git",
+    "team": "oppfølging"
   },
   "modiaeventdistribution": {
-    "gitUrl": "ssh://git@stash.devillo.no:7999/felles/modiaeventdistribution.git"
+    "gitUrl": "ssh://git@stash.devillo.no:7999/felles/modiaeventdistribution.git",
+    "team": "oppfølging"
   },
   "modiacontextholder": {
-    "gitUrl": "ssh://git@stash.devillo.no:7999/felles/modiacontextholder.git"
+    "gitUrl": "ssh://git@stash.devillo.no:7999/felles/modiacontextholder.git",
+    "team": "oppfølging"
+  },
+  "modiaflatefs": {
+    "gitUrl": "ssh://git@stash.devillo.no:7999/dial/modiaflatefs.git",
+    "team": "oppfølging"
   },
   "brukerdialog-behandleaktivitetsplan-v1-tjenestespesifikasjon": {
     "gitUrl": "ssh://git@stash.devillo.no:7999/fo/brukerdialog-behandleaktivitetsplan-v1-tjenestespesifikasjon.git"
@@ -137,10 +174,6 @@
   },
   "brukerdialog-jobbsokerkompetanse-v1-tjenestespesifikasjon": {
     "gitUrl": "ssh://git@stash.devillo.no:7999/fo/brukerdialog-jobbsokerkompetanse-v1-tjenestespesifikasjon.git"
-  },
-  "forenklet-deploy": {
-    "gitUrl": "https://github.com/navikt/fo-forenket-deploy.git",
-    "sone": "iapp"
   }
 }
 

@@ -29,8 +29,8 @@
   "unleash": {
     "gitUrl": "https://github.com/navikt/unleash.git"
   },
-  "badkitty": {
-    "gitUrl": "https://github.com/navikt/pus-badkitty.git"
+  "forenklet-deploy": {
+    "gitUrl": "https://github.com/navikt/fo-forenket-deploy.git"
   }
 }
 

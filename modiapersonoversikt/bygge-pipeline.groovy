@@ -131,7 +131,7 @@ gitCommitHash=${gitCommitHash}
             }
 
             sdf = new SimpleDateFormat("yyyyMMdd.Hmm")
-            versjon = "${gitCommitNumber}.${sdf.format(new Date())}"
+            versjon = "${gitCommitHash}"
 
             echo "Build version: ${versjon}"
             addToDescription("Version: ${versjon}")
@@ -156,11 +156,6 @@ gitCommitHash=${gitCommitHash}
 
         stage("mvn deploy") {
             mvnCommand("mvn deploy --batch-mode -DskipTests")
-        }
-
-        stage("git tag") {
-            sh "git tag -a ${versjon} -m ${versjon} HEAD"
-            sh "git push --tags"
         }
 
         status("ok")

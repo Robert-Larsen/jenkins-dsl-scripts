@@ -2,7 +2,8 @@ def prosjektMappe = this.SCRIPT_FOLDER
 def configJson = readFileFromWorkspace("${prosjektMappe}/config.json")
 def config = new groovy.json.JsonSlurper().parseText(configJson)
 
-def miljoer = ["t6", "q6", "q0"]
+def testMiljoer = ["t6", "q6", "q0"]
+def alleMiljoer = ["t6", "q6", "q0", "p"]
 def promoteringConfig = [
         q6: "t6",
         q0: "q6",
@@ -42,6 +43,7 @@ config.forEach({ applikasjonsNavn, applikasjonsConfig ->
 
     def gitUrl = applikasjonsConfig.gitUrl
     def type = applikasjonsConfig.type
+    def sone = applikasjonsConfig.sone
     def downstreamConfig = applikasjonsConfig.downstream
     def lsRemoteProcess = "git ls-remote --heads ${gitUrl}".execute()
     def lsRemote = lsRemoteProcess.in.text
@@ -61,7 +63,7 @@ config.forEach({ applikasjonsNavn, applikasjonsConfig ->
             concurrentBuild(false)
 
             logRotator {
-                numToKeep(20)
+                numToKeep(5)
             }
 
             def pipelineScript = readFileFromWorkspace("${prosjektMappe}/bygge-pipeline.groovy")
@@ -70,7 +72,7 @@ config.forEach({ applikasjonsNavn, applikasjonsConfig ->
                     branch          : branchName,
                     applikasjonsNavn: applikasjonsNavn,
                     downstream      : downstreamConfig ? "${prosjektMappe}/${downstreamConfig}/master" : null,
-                    sone            : applikasjonsConfig.sone, // nais-applikasjoner må ha dette
+                    sone            : sone, // nais-applikasjoner må ha dette
             ])
 
             definition {
@@ -108,7 +110,7 @@ config.forEach({ applikasjonsNavn, applikasjonsConfig ->
             concurrentBuild(false)
 
             logRotator {
-                numToKeep(20)
+                numToKeep(5)
             }
 
             def pipelineScript = readFileFromWorkspace("${prosjektMappe}/promotering-pipeline.groovy")
@@ -116,7 +118,7 @@ config.forEach({ applikasjonsNavn, applikasjonsConfig ->
                     tilMiljo        : tilMiljo,
                     fraMiljo        : fraMiljo,
                     applikasjonsNavn: applikasjonsNavn,
-                    sone            : applikasjonsConfig.sone, // nais-applikasjoner må ha dette
+                    sone            : sone, // nais-applikasjoner må ha dette
             ])
 
             definition {
@@ -129,19 +131,20 @@ config.forEach({ applikasjonsNavn, applikasjonsConfig ->
 
     })
 
-    miljoer.forEach({ miljo ->
+    testMiljoer.forEach({ miljo ->
         pipelineJob("${applikasjonsMappe}/-miljotest-${miljo}-") {
             concurrentBuild(false)
 
             logRotator {
-                numToKeep(20)
+                numToKeep(5)
             }
 
             def pipelineScript = readFileFromWorkspace("${prosjektMappe}/miljotest-pipeline.groovy")
             def pipelineKonstanter = toEnvironmentString([
                     miljo: miljo,
                     applikasjonsNavn: applikasjonsNavn,
-                    type: type
+                    type: type,
+					gitUrl: gitUrl
             ])
 
             definition {
@@ -153,12 +156,40 @@ config.forEach({ applikasjonsNavn, applikasjonsConfig ->
         }
     })
 
+    alleMiljoer.forEach({ miljo ->
+        pipelineJob("${applikasjonsMappe}/-redeploy-${miljo}-") {
+            description("Redeploy ${miljo}")
+            concurrentBuild(false)
+
+            logRotator {
+                numToKeep(5)
+            }
+
+            def pipelineScript = readFileFromWorkspace("${prosjektMappe}/promotering-pipeline.groovy")
+            def pipelineKonstanter = toEnvironmentString([
+                    tilMiljo        : miljo,
+                    fraMiljo        : miljo,
+                    applikasjonsNavn: applikasjonsNavn,
+                    sone            : sone, // nais-applikasjoner må ha dette
+            ])
+
+            definition {
+                cps {
+                    script("${pipelineKonstanter}\n\n${pipelineScript}")
+                    sandbox() // ellers må noen manuelt godkjenne scriptet!
+                }
+            }
+        }
+
+    })
+
+
     if(gitUrl.contains("github")){
         pipelineJob("${applikasjonsMappe}/-backup-") {
             concurrentBuild(false)
 
             logRotator {
-                numToKeep(20)
+                numToKeep(5)
             }
 
             triggers {
@@ -185,13 +216,13 @@ config.forEach({ applikasjonsNavn, applikasjonsConfig ->
         concurrentBuild(false)
 
         logRotator {
-            numToKeep(20)
+            numToKeep(5)
         }
 
         def pipelineScript = readFileFromWorkspace("${prosjektMappe}/release-pipeline.groovy")
         def pipelineKonstanter = toEnvironmentString([
                 applikasjonsNavn: applikasjonsNavn,
-                sone            : applikasjonsConfig.sone, // nais-applikasjoner må ha dette
+                sone            : sone, // nais-applikasjoner må ha dette
         ])
 
         definition {

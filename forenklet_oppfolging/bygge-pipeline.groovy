@@ -113,24 +113,28 @@ def status(statusCode) {
     }
 }
 
+def cleanup() {
+    stage("cleanup") {
+        // docker-containere kan potensielt legge igjen filer eid av root i workspace
+        // trenger å slette disse som root
+        // samtidig er det et poeng å slette node_modules slik at vi får mer konsistente bygg
+        sh("docker run" +
+                " --rm" + // slett container etter kjøring
+                " -v ${workspace}:/workspace" + // map inn workspace
+                " ${foMavenDockerImage}" +
+                " chmod -R 777 /workspace"
+        )
+        deleteDir()
+    }
+}
+
 node("docker") {
     nodeName = env.NODE_NAME
     echo "running on ${nodeName}"
 
     try {
 
-        stage("cleanup") {
-            // docker-containere kan potensielt legge igjen filer eid av root i workspace
-            // trenger å slette disse som root
-            // samtidig er det et poeng å slette node_modules slik at vi får mer konsistente bygg
-            sh("docker run" +
-                    " --rm" + // slett container etter kjøring
-                    " -v ${workspace}:/workspace" + // map inn workspace
-                    " ${foMavenDockerImage}" +
-                    " chmod -R 777 /workspace"
-            )
-            deleteDir()
-        }
+        cleanup()
 
         stage("checkout") {
             sh "git clone -b ${branch} ${gitUrl} ."
@@ -283,21 +287,12 @@ gitCommitHash=${gitCommitHash}
         if (naisDeploy) {
 
             stage("nais deploy ${miljo}") {
-
-                mvnCommand("mvn deploy:deploy-file " +
-                        " -DgroupId=nais" +
-                        " -DartifactId=${applikasjonsNavn}" +
-                        " -Dversion=${versjon}" +
-                        " -Dtype=yaml" +
-                        " -Dfile=app-config.yaml" +
-                        " -DrepositoryId=m2internal" +
-                        " -Durl=http://maven.adeo.no/nexus/content/repositories/m2internal"
-                )
-
                 sh("docker pull ${deployDockerImage}")
                 sh("docker run" +
                         " --rm" +  // slett container etter kjøring
                         " --env-file ${environmentFile}" +
+                        " -v ${workspace}:/workspace" + // map inn workspace
+                        " -w /workspace" + // sett working directory
                         " -e plattform=nais" +
                         " -e versjon=${versjon}" +
                         " ${deployDockerImage}"
@@ -336,9 +331,12 @@ gitCommitHash=${gitCommitHash}
             ])
         }
 
+
         status("ok")
     } catch (Throwable t) {
         status("error")
         throw t
     }
+
+    cleanup()
 }
