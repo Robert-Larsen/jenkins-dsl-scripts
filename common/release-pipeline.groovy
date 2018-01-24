@@ -1,6 +1,6 @@
 dockerImage="docker.adeo.no:5000/pus/toolbox"
 gitUrl="http://stash.devillo.no/scm/common/release.git"
-testmiljo="q6"
+testmiljo="t6"
 
 node("docker") {
     nodeName = env.NODE_NAME

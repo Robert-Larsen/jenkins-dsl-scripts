@@ -1,5 +1,5 @@
 dockerImage = "docker.adeo.no:5000/pus/maven"
-testmiljo="q6"
+testmiljo="t6"
 
 node("docker") {
     nodeName = env.NODE_NAME
