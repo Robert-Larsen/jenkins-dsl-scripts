@@ -42,6 +42,8 @@ node("docker") {
                 " -v ${workspace}:/workspace" + // map inn workspace
                 " -w /workspace" + // sett working directory til workspace
                 " -v ~/.m2/repository:/root/.m2/repository" + // map inn maven cache
+                " -e NEXUS_USERNAME" +
+                " -e NEXUS_PASSWORD" +
                 " -e domenebrukernavn" +
                 " -e domenepassord" +
                 " -e testmiljo=${testmiljo}" +
