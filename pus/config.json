@@ -30,7 +30,7 @@
     "gitUrl": "https://github.com/navikt/unleash.git"
   },
   "forenklet-deploy": {
-    "gitUrl": "https://github.com/navikt/fo-forenket-deploy.git"
+    "gitUrl": "https://github.com/navikt/fo-forenklet-deploy.git"
   }
 }
 
