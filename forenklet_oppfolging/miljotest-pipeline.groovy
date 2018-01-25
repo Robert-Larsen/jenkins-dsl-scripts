@@ -46,6 +46,7 @@ DOMENEPASSORD=${domenepassord}
 http_proxy=${http_proxy}
 https_proxy=${https_proxy}
 no_proxy=${no_proxy}
+TYPE=${type}
 """
 		
         println(environment)
