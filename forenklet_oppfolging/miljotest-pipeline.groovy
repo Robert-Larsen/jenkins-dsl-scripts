@@ -3,7 +3,7 @@ pusDockerImagePrefiks = "docker.adeo.no:5000/pus/"
 smoketestFrontendImage = "${pusDockerImagePrefiks}smoketest-frontend"
 uuDefinitionFile = "uu-definisjon.js"
 uuValidatorImage = "${pusDockerImagePrefiks}uu-validator"
-miljotestUrl = "http://bekkci.devillo.no/job/forenklet_oppfolging/job/${applikasjonsNavn}/job/-miljotest-${MILJO}-/"
+miljotestUrl = "http://bekkci.devillo.no/job/forenklet_oppfolging/job/${applikasjonsNavn}/job/-miljotest-${miljo}-/"
 
 def notifyOnError(errorMessage) {
     if (gitCommitHash != null) {
