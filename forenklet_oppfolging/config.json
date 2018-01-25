@@ -105,7 +105,8 @@
   "jobbsokerkompetanse": {
     "gitUrl": "https://github.com/navikt/jobbsokerkompetanse.git",
     "sone": "sbs",
-    "team": "sib"
+    "team": "sib",
+    "type": "frontend"
   },
   "arbeidssokerregistrering": {
     "gitUrl": "https://github.com/navikt/arbeidssokerregistrering.git",
