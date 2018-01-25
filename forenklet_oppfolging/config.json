@@ -7,7 +7,8 @@
   "badkitty": {
     "gitUrl": "https://github.com/navikt/pus-badkitty.git",
     "sone": "fss",
-    "team": "pus"
+    "team": "pus",
+    "type": "frontend"
   },
   "veilarbperson": {
     "gitUrl": "ssh://git@stash.devillo.no:7999/fo/veilarbperson.git",
