@@ -42,6 +42,7 @@ node("docker") {
                 " -v ${workspace}:/workspace" + // map inn workspace
                 " -w /workspace" + // sett working directory til workspace
                 " -v ~/.m2/repository:/root/.m2/repository" + // map inn maven cache
+                " -v ~/.gitconfig:/root/.gitconfig" + // slik at vi kan tagge
                 " -e NEXUS_USERNAME" +
                 " -e NEXUS_PASSWORD" +
                 " -e domenebrukernavn" +
