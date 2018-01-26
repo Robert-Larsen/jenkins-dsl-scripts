@@ -7,13 +7,13 @@ node("docker") {
     echo "running on ${nodeName}"
 
     def versjon
-    stage("hent versjon fra vera") {
+    stage("hent versjon fra vera - ${fraMiljo}") {
         def url = "https://vera.adeo.no/api/v1/deploylog?onlyLatest=true&application=${applikasjonsNavn}&environment=${fraMiljo}"
         def deployLog = new groovy.json.JsonSlurper().parse(new URL(url))
         versjon = deployLog[0].version
     }
 
-    stage("promotering til ${tilMiljo}") {
+    stage("deploy til ${tilMiljo}") {
 
         writeFile([
                 file: environmentFile,
@@ -36,10 +36,12 @@ plattform=${plattform}
                 " ${pusDockerImagePrefiks}deploy"
         )
 
-        build([
-                job : "./-miljotest-${tilMiljo}-",
-                wait: false
-        ])
+        if (miljotest) {
+            build([
+                    job : "./-miljotest-${tilMiljo}-",
+                    wait: false
+            ])
+        }
     }
 
 }

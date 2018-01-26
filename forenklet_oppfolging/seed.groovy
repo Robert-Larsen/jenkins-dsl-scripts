@@ -119,6 +119,7 @@ config.forEach({ applikasjonsNavn, applikasjonsConfig ->
                     fraMiljo        : fraMiljo,
                     applikasjonsNavn: applikasjonsNavn,
                     sone            : sone, // nais-applikasjoner må ha dette
+                    miljotest       : true
             ])
 
             definition {
