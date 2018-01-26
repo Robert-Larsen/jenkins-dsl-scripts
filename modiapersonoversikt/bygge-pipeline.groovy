@@ -88,6 +88,7 @@ node("docker") {
             def gitCommitNumber = sh(returnStdout: true, script: "git rev-list --count HEAD").trim()
             gitCommitHash = sh(returnStdout: true, script: "git rev-parse HEAD").trim()
             def gitCommitHashShort = gitCommitHash.substring(0, 8)
+            def gitDescription = sh(returnStdout: true, script: "git describe HEAD").trim()
             addToDescription("Commit: ${gitCommitHashShort}")
 
             def environment = """
@@ -106,6 +107,7 @@ https_proxy=${https_proxy}
 no_proxy=${no_proxy}
 gitUrl=${gitUrl}
 gitCommitHash=${gitCommitHash}
+gitDescription=${gitDescription}
 """
             println(environment)
             writeFile([
@@ -128,10 +130,12 @@ gitCommitHash=${gitCommitHash}
                 stage("git merge master") {
                     sh "git merge origin/master"
                 }
-            }
 
-            sdf = new SimpleDateFormat("yyyyMMdd.Hmm")
-            versjon = "${gitCommitHash}"
+                versjon = "${gitDescription}"
+
+            } else {
+                versjon = "${gitCommitNumber}"
+            }
 
             echo "Build version: ${versjon}"
             addToDescription("Version: ${versjon}")
@@ -156,6 +160,13 @@ gitCommitHash=${gitCommitHash}
 
         stage("mvn deploy") {
             mvnCommand("mvn deploy --batch-mode -DskipTests")
+        }
+
+        if (isMasterBranch(branch)) {
+            stage("git tag") {
+                sh "git tag -a ${versjon} -m ${versjon} HEAD"
+                sh "git push --tags"
+            }
         }
 
         status("ok")
