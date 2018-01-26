@@ -117,7 +117,7 @@ versjon=${versjon}
                     " --volume /var/run/docker.sock:/var/run/docker.sock" + // gjør det mulig åstarte nye containere fra denne containeren.
                     " --workdir /workspace" +
                     " --env-file ${environmentFile}" +
-                    " docker.adeo.no:5000/soknad/soknad-builder:1.0.0" +
+                    " docker.adeo.no:5000/soknad/soknad-builder:1.1.0" +
                     " ./build.sh"
             )
         }
