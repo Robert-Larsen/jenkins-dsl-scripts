@@ -1,5 +1,5 @@
 dockerImage="docker.adeo.no:5000/pus/toolbox"
-gitUrl="http://stash.devillo.no/scm/common/release.git"
+gitUrl="ssh://git@stash.devillo.no:7999/common/release.git"
 testmiljo="t6"
 
 node("docker") {
@@ -22,11 +22,6 @@ node("docker") {
         checkout([
                 $class           : "GitSCM",
                 userRemoteConfigs: [[url: gitUrl]],
-
-                // TODO midlertidig frem til vi merger dette til master
-                branches         : [[name: "http"]],
-                // TODO midlertidig frem til vi merger dette til master
-
                 extensions       : [
                         [
                                 $class: "PruneStaleBranch"
@@ -43,6 +38,7 @@ node("docker") {
                 " -w /workspace" + // sett working directory til workspace
                 " -v ~/.m2/repository:/root/.m2/repository" + // map inn maven cache
                 " -v ~/.gitconfig:/root/.gitconfig" + // slik at vi kan tagge
+                " -v ~/.ssh:/root/.ssh" + // slik at vi kan tagge
                 " -e NEXUS_USERNAME" +
                 " -e NEXUS_PASSWORD" +
                 " -e domenebrukernavn" +

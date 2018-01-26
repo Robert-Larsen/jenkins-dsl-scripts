@@ -47,8 +47,7 @@ tjenesterRepositories.values.forEach { repo ->
                     branch: branchId,
             ].collect({ property, verdi -> "${property}=\"${verdi}\"" }).join("\n")
 
-            def prefix = applikasjonsNavn == "release" ? "release" : "bygge";
-            def pipelineScript = readFileFromWorkspace("${prosjektMappe}/${prefix}-pipeline.groovy")
+            def pipelineScript = readFileFromWorkspace("${prosjektMappe}/bygge-pipeline.groovy")
 
             definition {
                 cps {
