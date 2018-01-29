@@ -28,5 +28,8 @@
   },
   "sendsoknad": {
     "gitUrl": "ssh://git@stash.devillo.no:7999/sokd/sendsoknad.git"
+  },
+  "dialogstyring": {
+    "gitUrl": "ssh://git@stash.devillo.no:7999/dial/dialogstyring.git"
   }
 }
